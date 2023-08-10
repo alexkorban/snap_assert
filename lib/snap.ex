@@ -13,11 +13,9 @@ defmodule Snap do
   # a private macro to deduplicate (as it has to generate code using variables from surrounding context).
   # Another possibility is to try generating macros like `snap_assert` with another macro.
   defmacro snap_assert(arg) do
-    # IO.puts("Macro call on line #{__CALLER__.line} with arg #{inspect(arg)}")
+    # Macro call line can be obtained via `__CALLER__.line`
 
     quote do
-      # IO.puts("Running expanded code on line #{__ENV__.line}")
-
       result = unquote(arg)
       line = __ENV__.line
       path = __ENV__.file
@@ -54,11 +52,7 @@ defmodule Snap do
   end
 
   defmacro snap_assert_raise(fun) do
-    # IO.puts("snap_assert_raise call on line #{__CALLER__.line} with fun #{inspect(fun)}")
-
     quote do
-      # IO.puts("Running expanded code on line #{__ENV__.line}")
-
       result =
         try do
           apply(unquote(fun), [])
@@ -100,18 +94,12 @@ defmodule Snap do
   # from the surrounding code, hence I have to rely on calling a public function (a private function
   # of course isn't an option either)
   def __patched__({macro_match, meta, [matched_arg]} = quoted, patches, line, result, flip_args?: flip_args?) do
-    # meta |> IO.inspect(label: "\n\nsnap_assert META")
-    # quoted |> IO.inspect(label: "snap_assert MATCH")
-
     if Enum.member?(meta, {:line, line}) do
-      # |> IO.inspect(label: "snap_assert RANGE")
       range = Sourceror.get_range(quoted)
 
       replacement =
         {macro_match, meta, if(flip_args?, do: [result, matched_arg], else: [matched_arg, result])}
         |> Sourceror.to_string()
-
-      # |> IO.inspect(label: "snap_assert REPLACEMENT")
 
       patch = %{range: range, change: replacement}
       {quoted, [patch | patches]}
