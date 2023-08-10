@@ -1,6 +1,6 @@
-# Fp
+# snap_assert
 
-**TODO: Add description**
+Instant snapshot testing inside your unit tests.
 
 ## Installation
 
@@ -10,7 +10,7 @@ by adding `fp` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:fp, "~> 0.1.0"}
+    {:snap_assert, "~> 0.1.0"}
   ]
 end
 ```

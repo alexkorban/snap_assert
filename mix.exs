@@ -1,4 +1,4 @@
-defmodule Fp.MixProject do
+defmodule SnapAssert.MixProject do
   use Mix.Project
 
   def project do
