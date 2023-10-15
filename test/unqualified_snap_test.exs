@@ -12,6 +12,6 @@ defmodule UnqualifiedSnapTest do
 
   test "snap_assert_raise" do
     snap_assert_raise ArgumentError, fn -> raise ArgumentError end
-    snap_assert_raise ArithmeticError, fn -> raise 1 / 0 end
+    snap_assert_raise ArithmeticError, fn -> 1 / 0 end
   end
 end
