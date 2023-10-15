@@ -21,6 +21,7 @@ defmodule SnapAssert.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:ex_doc, "~> 0.30", only: :dev, runtime: false},
       {:sourceror, "~> 0.14"}
     ]
   end
