@@ -30,6 +30,15 @@ be found at <https://hexdocs.pm/snap_assert>.
 4. Tests will pass and `snap_assert <some expression>` will turn into `snap_assert <some expression>, <expression value>`
 5. Run the tests again; `snap_assert` with two arguments will now be equivalent to a regular assert so tests will pass.
 
+More concrete example:
+
+- Add `snap_assert(String.upcase("hello"))` to a test
+- Run `mix test` (tests will pass)
+- The test file is now updated so that you have `snap_assert(String.upcase("hello"), "HELLO")`
+- Run `mix test` again - tests will pass
+- Change the expression to `snap_assert(String.upcase("hello"), "GOODBYE")`
+- Run `mix test` again - tests will fail, ie. now you have a regular assert.
+
 When working with `snap_assert`, it's useful to have the tests run on every change, for example with:
 
 ```

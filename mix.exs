@@ -4,10 +4,21 @@ defmodule SnapAssert.MixProject do
   def project do
     [
       app: :snap_assert,
+      description: "Instant snapshot testing inside your ex_unit tests",
       version: "0.1.0",
       elixir: "~> 1.14",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      # Docs
+      source_url: "https://github.com/alexkorban/snap_assert",
+      homepage_url: "https://github.com/alexkorban/snap_assert",
+      docs: [
+        main: "readme",
+        extras: ["README.md"]
+      ],
+      package: [
+        licenses: ["BSD-3-Clause"]
+      ]
     ]
   end
 

@@ -3,47 +3,6 @@ defmodule Snap do
   Provides macros for instant snapshot testing, that is, macros that automatically amend
   the source code of the test file at their call site with the evaluated value of the expression
   under test.
-
-  ## Usage
-
-  1. Import `Snap` in your test file
-  2. Use `snap_assert <some expression>` in one of the tests
-  3. Run the tests with `mix test`
-  4. Tests will pass and `snap_assert <some expression>` will turn into `snap_assert <some expression>, <expression value>`
-  5. Run the tests again; `snap_assert` with two arguments will now be equivalent to a regular assert so tests will pass.
-
-  More concrete example:
-
-  - Add `snap_assert(String.upcase("hello"))` to a test
-  - Run `mix test` (tests will pass)
-  - The test file is now updated so that you have `snap_assert(String.upcase("hello"), "HELLO")`
-  - Run `mix test` again - tests will pass
-  - Change the expression to `snap_assert(String.upcase("hello"), "GOODBYE")`
-  - Run `mix test` again - tests will fail, ie. now you have a regular assert.
-
-  When working with `snap_assert`, it's useful to have the tests run on every change, for example with:
-
-  ```
-  fswatch lib test | mix test --listen-on-stdin --stale
-  ```
-
-  ## Why?
-
-  I was inspired by this post by Ian Henry: https://ianthehenry.com/posts/my-kind-of-repl/
-
-  At first, the idea of inserting the value of an expression into an assert seems tautological.
-  However, consider how we often write functions: start with a draft implementation, try it out in the REPL,
-  realise it's incomplete, make tweaks, try again, repeat until done. Then write unit tests, possibly
-  by copy-pasting from the REPL.
-
-  `snap_assert` moves some of that REPL into your test file. When you run tests which include a `snap_assert`,
-  you'll see the results directly in your test file. If they are as expected - great, you now have a unit test
-  for free. If not, delete the incorrect value, fix your function, run the tests again. Rinse and repeat.
-
-  I was skeptical at first, but I've been trying this macro while working on a package, and it feels good.
-
-  Of course, `snap_assert` isn't suitable for all tests: sometimes you want to check for a substring match, or a pattern match,
-  or check that a message is received, and in those cases you still need to use regular ex_unit functionality.
   """
 
   defmodule UnexpectedLackOfException do
